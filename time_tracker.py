@@ -6,6 +6,8 @@ import pyautogui
 from loguru import logger
 from datetime import datetime
 
+PROJECT_NAME = "auto_time_tracker"
+
 def log_format(record):
     # Remove initial part of the file path to spare space.
     # (only the last 2 names will be)
@@ -28,8 +30,8 @@ def log_format(record):
 # Reset logger (remove all added handlers).
 logger.remove()
 # Add handler with custom format and output
-logger.add("debug.log", level="DEBUG", format=log_format)
-logger.add("general.log", level="INFO", format=log_format)
+logger.add(f"{PROJECT_NAME}__debug.log", level="DEBUG", format=log_format)
+logger.add(f"{PROJECT_NAME}__general.log", level="INFO", format=log_format)
 
 
 class Project:
