@@ -1,3 +1,6 @@
+auto_time_tracker__*.*
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
