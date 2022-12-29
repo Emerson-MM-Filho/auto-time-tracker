@@ -33,13 +33,13 @@ logger.add("general.log", level="INFO", format=log_format)
 
 
 class Project:
-    def __init__(self, project: str):
-        self._project = project
+    def __init__(self, name: str, ):
+        self._name = name
         self._start_datetime = None
         self._end_datetime = None
 
     def __repr__(self):
-        return f"<VsCodeReport project: {self.project}>"
+        return f"<VsCodeReport project: {self.name}>"
 
     @property
     def start_datetime(self):
@@ -50,8 +50,8 @@ class Project:
         return self._end_datetime
 
     @property
-    def project(self):
-        return self._project
+    def name(self):
+        return self._name
 
     def start_tracking(self):
         self._start_datetime = datetime.now()
@@ -61,9 +61,10 @@ class Project:
 
     def generate_json_report(self):
         return {
-            "project": self.project,
+            self.name: {
             "start_datetime": self.start_datetime,
             "end_datetime": self.end_datetime,
+            },
         }
 
     def generate_str_report(self):
@@ -100,13 +101,13 @@ def main():
     last_project_worked = None
     try:
         while True:
-            time.sleep(1) 
+            time.sleep(1)
             active_window = get_active_window()
 
             if active_window and "Visual Studio Code" in active_window.title:
                 current_project = active_window.title.split(" - ")[1]
 
-                if last_project_worked == None or current_project != last_project_worked.project:
+                if last_project_worked == None or current_project != last_project_worked.name:
                     logger.info(f"Stop Tracking {last_project_worked}")
                     if last_project_worked != None:
                         stop_tracking_and_report(last_project_worked)
