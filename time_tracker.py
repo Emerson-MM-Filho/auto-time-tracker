@@ -67,10 +67,6 @@ class Project:
             },
         }
 
-    def generate_str_report(self):
-        json_report = self.generate_json_report()
-        spended_time = json_report["end_datetime"] - json_report["start_datetime"]
-        return f"""Was spended {spended_time} time on project {self.project}."""
 
 def create_or_update_report_in_history_file(project: Project):
 
