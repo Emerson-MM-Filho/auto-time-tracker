@@ -1,7 +1,8 @@
 import json
 import time
-from typing import Union, Dict
 import pyautogui
+from pathlib import Path
+from typing import Union
 
 from loguru import logger
 from datetime import datetime
@@ -69,6 +70,14 @@ class Project:
             },
         }
 
+def get_or_create_history_file() -> Path:
+    file = (Path.cwd() / f"./{PROJECT_NAME}_history.json")
+    if file.exists():
+        return file
+    else:
+        with open(file, 'w') as f:
+            f.write('{}')
+        return file
 
 def create_or_update_report_in_history_file(project: Project):
 
