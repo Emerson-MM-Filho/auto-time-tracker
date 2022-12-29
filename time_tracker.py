@@ -73,16 +73,18 @@ class Project:
         return f"""Was spended {spended_time} time on project {self.project}."""
 
 def create_or_update_report_in_history_file(project: Project):
-    report = project.generate_json_report()
 
-    with open("track_history.json", "r+") as file:
+    with open(get_or_create_history_file(), "r") as file:
         json_history = json.load(file)
 
-        if json_history.get(report["project"]):
-            json_history[report["project"]] = report
-        else:
-            json_history.append(report)
+    report = project.generate_json_report()
 
+    if json_history.get(project.name):
+        json_history[project.name] = {**report[project.name]}
+    else:
+        json_history.update(**report)
+
+    with open(get_or_create_history_file(), "w") as file:
         file.write(json.dumps(json_history, indent=4, default=str))
 
 
